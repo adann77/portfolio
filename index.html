@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#F1F2EC" />
+    <script>
+      try {
+        var q = new URLSearchParams(location.search).get("theme");
+        var t = q === "dark" || q === "light" ? q : localStorage.getItem("theme");
+        if (!t) t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.dataset.theme = t;
+        document.documentElement.classList.add("booting");
+        document.querySelector('meta[name="theme-color"]').setAttribute("content", t === "dark" ? "#0C1210" : "#F1F2EC");
+      } catch (e) {}
+    </script>
+    <title>Syahdan Aqilla | Software Engineer</title>
+    <meta name="description" content="Syahdan Aqilla, Software Engineer (Full Stack Developer Intern) dan mahasiswa Teknik Informatika Terapan Politeknik Caltex Riau. Karya live: Lentera (lenteracpns.id) dan Pelangi Accessories (pelangiaccessories.store)." />
+    <meta property="og:title" content="Syahdan Aqilla | Software Engineer" />
+    <meta property="og:description" content="Membangun software dari database sampai antarmuka. Lihat karya live: lenteracpns.id dan pelangiaccessories.store." />
+    <meta property="og:type" content="website" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Hanken+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

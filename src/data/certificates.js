@@ -1,0 +1,25 @@
+export const certificates = [
+  {
+    id: 1,
+    kind: "Sertifikasi",
+    title: "MikroTik Certified Network Associate (MTCNA)",
+    issuer: "MikroTik",
+    date: "Terbit 22 Jul 2025 · Berlaku hingga Jul 2028",
+    credentialId: "2507NA1018",
+    image: "/sertifikat-mtcna.webp",
+    width: 1000,
+    height: 1413,
+    alt: "Sertifikat MikroTik Certified Network Associate (MTCNA) atas nama Syahdan Aqilla, ID 2507NA1018",
+  },
+  {
+    id: 2,
+    kind: "Seminar",
+    title: "Peserta Seminar CSIRT 2024: Evolution of Cybercrime",
+    issuer: "Politeknik Caltex Riau · UKM CSIRT",
+    date: "27 April 2024",
+    image: "/sertifikat-csirt-2024.webp",
+    width: 1500,
+    height: 1060,
+    alt: "Sertifikat peserta Seminar CSIRT 2024 Evolution of Cybercrime atas nama Syahdan Aqilla",
+  },
+];

@@ -1,0 +1,15 @@
+export const profile = {
+  name: "Syahdan Aqilla",
+  role: "Software Engineer",
+  location: "Pekanbaru, Riau, Indonesia",
+  email: "syahdan22ti@mahasiswa.pcr.ac.id",
+  whatsapp: "+6282170977939",
+  whatsappDisplay: "+62 821-7097-7939",
+  university: "Politeknik Caltex Riau",
+  degree: "D4 Teknik Informatika Terapan",
+  period: "2022–2027",
+  gpa: "3.45",
+  semester: "Semester 7",
+  about: `Saya adalah mahasiswa semester 7 D4 Teknik Informatika Terapan di Politeknik Caltex Riau dengan minat utama pada software development dan web application development. Memiliki pengetahuan dalam programming, database, software engineering, serta basic computer networks dan network administration. Memiliki kemampuan problem solving dan terbiasa bekerja secara terstruktur, baik individu maupun tim.`,
+  heroDescription: `Full Stack Developer Intern di PT Royal General Indonesia dan mahasiswa Teknik Informatika Terapan.`,
+};
