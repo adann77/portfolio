@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useInView, usePing } from "../hooks";
 import { profile } from "../data/profile";
 import { liveSites } from "../data/social";
@@ -31,17 +32,19 @@ function LiveRow({ site, delay }) {
 
 export default function Hero() {
   const [ref, inView] = useInView(0.1);
+  const [touched, setTouched] = useState(false);
 
   // pointer position lights up the dot grid behind the hero
   const onMove = (e) => {
+    if (!touched) setTouched(true);
     const r = e.currentTarget.getBoundingClientRect();
     e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
     e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
   };
 
   return (
-    <section id="home" onMouseMove={onMove} className="relative overflow-hidden pt-24 sm:pt-28 pb-14 sm:pb-20">
-      <div className="dotgrid" aria-hidden="true" />
+    <section id="home" onPointerMove={onMove} onPointerDown={onMove} className="relative overflow-hidden pt-24 sm:pt-28 pb-14 sm:pb-20">
+      <div className={`dotgrid ${touched ? "" : "idle"}`} aria-hidden="true" />
       <div className="wrap relative grid lg:grid-cols-12 gap-12 lg:gap-8 items-start">
         <div className="lg:col-span-7 lg:pt-10">
           <p className="label text-graphite fade-up">Software Engineer · {profile.location}</p>

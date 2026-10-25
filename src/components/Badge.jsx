@@ -9,7 +9,7 @@ export default function Badge() {
   const card = useRef(null);
   const [flipped, setFlipped] = useState(false);
   const [touched, setTouched] = useState(false);
-  const s = useRef({ a: 0.4, v: 0, drag: false, moved: 0, lastA: 0, lastT: 0, px: 0, py: 0, visible: true });
+  const s = useRef({ a: 0.4, v: 0, drag: false, moved: 0, lastA: 0, lastT: 0, px: 0, py: 0, visible: true, tilt: 0 });
 
   useEffect(() => {
     const st = s.current;
@@ -23,7 +23,8 @@ export default function Badge() {
       last = now; t += dt;
       if (st.visible) {
         if (!st.drag) {
-          st.v += (-16 * Math.sin(st.a) - 1.15 * st.v) * dt;
+          // tilting the phone moves the resting point, like a real badge on a lanyard
+          st.v += (-16 * Math.sin(st.a - st.tilt) - 1.15 * st.v) * dt;
           // keep it faintly alive once it settles
           if (!reduce && Math.abs(st.a) < 0.03 && Math.abs(st.v) < 0.06) st.v += Math.sin(t * 1.4) * 0.5 * dt;
           st.a += st.v * dt;
@@ -36,16 +37,38 @@ export default function Badge() {
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
-    return () => { cancelAnimationFrame(raf); io.disconnect(); };
+
+    const onOrient = (e) => {
+      if (e.gamma == null) return;
+      st.tilt = Math.max(-0.6, Math.min(0.6, (e.gamma * Math.PI) / 180 * 0.8));
+    };
+    const onMotion = (e) => {
+      const ax = e.acceleration?.x;
+      if (ax != null && Math.abs(ax) > 4) st.v += Math.max(-3, Math.min(3, -ax * 0.12));
+    };
+    window.addEventListener("deviceorientation", onOrient);
+    window.addEventListener("devicemotion", onMotion);
+    return () => {
+      cancelAnimationFrame(raf); io.disconnect();
+      window.removeEventListener("deviceorientation", onOrient);
+      window.removeEventListener("devicemotion", onMotion);
+    };
   }, []);
+
+  // iOS only reports motion after the user grants it from a tap
+  const askMotion = () => {
+    const D = window.DeviceOrientationEvent;
+    if (D && typeof D.requestPermission === "function") D.requestPermission().catch(() => {});
+  };
 
   const onDown = (e) => {
     if (e.target.closest("a")) return;
+    askMotion();
     const st = s.current;
     const r = stage.current.getBoundingClientRect();
     st.drag = true; st.moved = 0; st.px = r.left + r.width / 2; st.py = r.top;
     st.lastA = st.a; st.lastT = performance.now();
-    e.currentTarget.setPointerCapture(e.pointerId);
+    try { e.currentTarget.setPointerCapture(e.pointerId); } catch { /* pointer already released */ }
     setTouched(true);
   };
 
@@ -58,7 +81,7 @@ export default function Badge() {
       if (dt > 0) st.v = st.v * 0.6 + ((a - st.lastA) / dt) * 0.4;
       st.lastA = a; st.lastT = now; st.a = a;
       st.moved += Math.abs(e.movementX) + Math.abs(e.movementY);
-    } else if (e.pointerType === "mouse") {
+    } else if (e.pointerType === "mouse" || e.pointerType === "pen") {
       st.v += Math.max(-40, Math.min(40, e.movementX)) * 0.018;
     }
   };
@@ -163,7 +186,7 @@ export default function Badge() {
         </div>
       </div>
       <p className={`label text-graphite mt-5 transition-opacity duration-500 ${touched ? "opacity-0" : "opacity-100"}`} aria-hidden={touched}>
-        Tarik, ayun, atau klik kartunya
+        Tarik, ayun, klik, atau miringkan HP-mu
       </p>
     </div>
   );

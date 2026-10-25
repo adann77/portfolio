@@ -37,9 +37,11 @@ export default function Splash() {
       else setTimeout(finish, reduce ? 0 : 250);
     };
     raf = requestAnimationFrame(tick);
+    // rAF pauses in background tabs; never leave the visitor stuck behind the splash
+    const fallback = setTimeout(finish, total + 900);
     const onKey = (e) => { if (["Enter", "Escape", " "].includes(e.key)) finish(); };
     window.addEventListener("keydown", onKey);
-    return () => { cancelAnimationFrame(raf); window.removeEventListener("keydown", onKey); };
+    return () => { cancelAnimationFrame(raf); clearTimeout(fallback); window.removeEventListener("keydown", onKey); };
   }, []);
 
   if (phase === "gone") return null;
