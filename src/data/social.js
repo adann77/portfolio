@@ -1,6 +1,5 @@
 export const social = {
-  // GitHub belum diketahui: isi url untuk menampilkan tombolnya.
-  github: { url: null, label: "GitHub" },
+  github: { url: "https://github.com/adann77", label: "GitHub" },
   linkedin: { url: "https://www.linkedin.com/in/syahdan-aqilla-0123b62b0", label: "LinkedIn" },
   email: { url: "mailto:syahdan22ti@mahasiswa.pcr.ac.id", label: "Email" },
   whatsapp: { url: "https://wa.me/6282170977939", label: "WhatsApp" },

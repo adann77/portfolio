@@ -82,6 +82,7 @@ export default function Badge() {
     ["Email", profile.email, social.email.url],
     ["WhatsApp", profile.whatsappDisplay, social.whatsapp.url],
     ["LinkedIn", "Syahdan Aqilla", social.linkedin.url],
+    ["GitHub", "github.com/adann77", social.github.url],
   ];
 
   return (
@@ -132,21 +133,21 @@ export default function Badge() {
               </div>
 
               {/* back */}
-              <div className="face back bg-night text-cream p-6 flex flex-col">
+              <div className="face back bg-night text-cream p-5 flex flex-col">
                 <div className="flex justify-center -mt-3 mb-4">
                   <span className="w-14 h-2 rounded-full bg-white/15" />
                 </div>
                 <p className="label text-amber">Hubungi saya</p>
                 <h3 className="display text-2xl mt-2">{profile.name}</h3>
-                <p className="text-sm text-cream/70 mt-1">Tersedia untuk magang, kerja, dan kolaborasi.</p>
-                <ul className="mt-6 space-y-3 text-sm">
+                <p className="text-xs text-cream/70 mt-1">Terbuka untuk kerja dan kolaborasi.</p>
+                <ul className="mt-4 space-y-2 text-sm">
                   {links.map(([k, v, href]) => (
                     <li key={k}>
                       <a
                         href={href}
                         target={k === "Email" ? undefined : "_blank"}
                         rel="noopener noreferrer"
-                        className="block rounded-xl border border-white/15 px-4 py-3 hover:border-amber hover:bg-white/5 transition-colors"
+                        className="block rounded-xl border border-white/15 px-3.5 py-2 hover:border-amber hover:bg-white/5 transition-colors"
                       >
                         <span className="label text-cream/60 block">{k}</span>
                         <span className="font-medium break-all">{v}</span>
