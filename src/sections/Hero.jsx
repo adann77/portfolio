@@ -80,7 +80,7 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="lg:col-span-5 lg:-mt-16 flex justify-center lg:justify-end lg:pr-6">
+        <div className="lg:col-span-5 lg:-mt-12 flex justify-center lg:justify-end lg:pr-6">
           <Badge />
         </div>
       </div>

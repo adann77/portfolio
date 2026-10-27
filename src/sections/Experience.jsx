@@ -14,7 +14,10 @@ const entries = [
     title: e.position,
     place: e.company,
     text: e.description,
-    points: e.highlights,
+    groups: [
+      { label: "Frontend", items: e.highlights.slice(0, e.split) },
+      { label: "Backend", items: e.highlights.slice(e.split) },
+    ],
     tech: e.tech,
   })),
   {
@@ -26,6 +29,37 @@ const entries = [
     text: `${profile.semester}, IPK ${profile.gpa}.`,
   },
 ];
+
+// Frontend / Backend points behind a two-way switch, so the entry stays short.
+function PointTabs({ groups }) {
+  const [tab, setTab] = useState(0);
+  return (
+    <div className="mt-5 max-w-3xl">
+      <div role="tablist" aria-label="Kelompok pekerjaan" className="relative grid grid-cols-2 w-full max-w-xs rounded-full border border-ink/20 p-1">
+        <span className="tab-pill" style={{ transform: `translateX(${tab * 100}%)` }} aria-hidden="true" />
+        {groups.map((g, i) => (
+          <button
+            key={g.label}
+            role="tab"
+            aria-selected={tab === i}
+            onClick={() => setTab(i)}
+            className={`relative z-[1] label py-2 rounded-full transition-colors duration-300 cursor-pointer ${tab === i ? "text-paper" : "text-graphite hover:text-ink"}`}
+          >
+            {g.label} · {g.items.length}
+          </button>
+        ))}
+      </div>
+      <ul key={tab} role="tabpanel" className="mt-4 space-y-2.5 text-[0.95rem]">
+        {groups[tab].items.map((p, i) => (
+          <li key={p} className="point-in flex gap-3 leading-relaxed" style={{ "--d": `${i * 60}ms` }}>
+            <span className="mt-[0.7em] h-px w-4 bg-ink shrink-0" aria-hidden="true" />
+            {p}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 // Drifts a child vertically a little as it crosses the viewport.
 function Drift({ speed = 0.08, className = "", children }) {
@@ -68,16 +102,7 @@ export default function Experience() {
                 <h3 className="display text-2xl sm:text-3xl transition-transform duration-300 group-hover:translate-x-2">{e.title}</h3>
                 <p className="mt-1.5 font-semibold text-accent">{e.place}</p>
                 <p className="mt-3 text-graphite max-w-3xl leading-relaxed">{e.text}</p>
-                {e.points && (
-                  <ul className="mt-4 space-y-2 max-w-3xl text-[0.95rem]">
-                    {e.points.map((p) => (
-                      <li key={p} className="flex gap-3 leading-relaxed">
-                        <span className="mt-[0.7em] h-px w-4 bg-ink shrink-0" aria-hidden="true" />
-                        {p}
-                      </li>
-                    ))}
-                  </ul>
-                )}
+                {e.groups && <PointTabs groups={e.groups} />}
                 {e.tech && (
                   <div className="flex flex-wrap gap-2 mt-5 text-accent">
                     {e.tech.map((t) => <span key={t} className="chip">{t}</span>)}

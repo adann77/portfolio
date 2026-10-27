@@ -6,7 +6,7 @@ export const experiences = [
     company: "PT Royal General Indonesia",
     position: "Full Stack Developer Intern",
     period: "7 Sep 2026 – 7 Jan 2027 · Pekanbaru, Riau",
-    description: "Terlibat dalam pengembangan Lentera (lenteracpns.id), aplikasi belajar dan latihan soal SKD CPNS: materi bacaan, latihan per tema, evaluasi, dan tryout. Aplikasinya dibangun dengan Flutter (mobile dan web), landing page dengan Next.js, dan backend Node.js/Express dengan PostgreSQL. Bekerja bersama tim, di sisi frontend dan backend.",
+    description: "Mengembangkan Lentera (lenteracpns.id), aplikasi belajar SKD CPNS, bersama tim: Flutter untuk aplikasi, Next.js untuk landing page, Node.js dan PostgreSQL untuk backend.",
     highlights: [
       "Ikut membangun antarmuka aplikasi dengan Flutter, Riverpod, dan go_router: login dan registrasi, beranda, alur belajar (materi, latihan per tema, tryout), halaman progres, profil, dan peringkat.",
       "Membangun layar panel admin untuk mengelola materi, bank soal, pengguna, dan impor soal.",
@@ -19,6 +19,8 @@ export const experiences = [
       "Mengembangkan fitur impor soal dari dokumen Word (.docx) agar admin mengisi bank soal dengan cepat.",
       "Membangun logika check-in harian (streak), statistik soal yang dikerjakan, dan peringkat hasil tryout.",
     ],
+    // shown as tabs on the site: first 4 points are frontend, the rest backend
+    split: 4,
     tech: ["Flutter", "Dart", "Riverpod", "Next.js", "Node.js", "Express.js", "PostgreSQL", "Knex.js", "JWT", "Nodemailer"],
   },
 ];

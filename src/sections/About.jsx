@@ -1,3 +1,4 @@
+import { HiChartBar, HiDeviceMobile, HiGlobeAlt, HiServer, HiWifi } from "react-icons/hi";
 import SectionTitle from "../components/SectionTitle";
 import Reveal from "../components/Reveal";
 import { profile } from "../data/profile";
@@ -18,11 +19,11 @@ const facts = [
 ];
 
 const focus = [
-  ["Backend & API", "REST API dengan Node.js, Express, dan PostgreSQL: autentikasi, hak akses, dan migrasi database."],
-  ["Web application", "Aplikasi web dengan Laravel dan CodeIgniter, dari analisis kebutuhan sampai deployment."],
-  ["Mobile", "Aplikasi Android native dengan Kotlin dan database lokal SQLite."],
-  ["Machine learning", "Model prediksi dengan Python, Scikit-learn, dan XGBoost."],
-  ["Jaringan", "Dasar administrasi jaringan MikroTik dan Cisco, bersertifikat MTCNA."],
+  [HiServer, "Backend & API", "Node.js · Express · PostgreSQL · JWT"],
+  [HiGlobeAlt, "Web", "Next.js · React · Laravel · CodeIgniter"],
+  [HiDeviceMobile, "Mobile", "Flutter · Kotlin · SQLite"],
+  [HiChartBar, "Machine learning", "Python · Scikit-learn · XGBoost"],
+  [HiWifi, "Jaringan", "MikroTik (MTCNA) · Cisco"],
 ];
 
 export default function About() {
@@ -34,11 +35,12 @@ export default function About() {
         <div className="grid lg:grid-cols-12 gap-12">
           <Reveal className="lg:col-span-7">
             <p className="text-lg sm:text-xl leading-relaxed">{profile.about}</p>
-            <ul className="mt-12 divide-y divide-ink/15 border-y border-ink/15">
-              {focus.map(([title, text]) => (
-                <li key={title} className="grid sm:grid-cols-[11rem_1fr] gap-1 sm:gap-6 py-4">
-                  <h3 className="font-display font-bold text-lg">{title}</h3>
-                  <p className="text-graphite">{text}</p>
+            <ul className="mt-10 grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {focus.map(([Icon, title, text], i) => (
+                <li key={title} className={`focus-card ${i === 0 ? "col-span-2 sm:col-span-1" : ""}`} tabIndex={0}>
+                  <Icon className="focus-icon text-accent" size={22} aria-hidden="true" />
+                  <h3 className="font-display font-bold text-[0.95rem] mt-3 leading-tight">{title}</h3>
+                  <p className="text-xs text-graphite mt-1 leading-snug">{text}</p>
                 </li>
               ))}
             </ul>

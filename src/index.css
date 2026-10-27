@@ -114,12 +114,16 @@
 .badge-stage { perspective: 1400px; }
 .badge-swing { transform-origin: 50% 0; will-change: transform; }
 .strap {
-  width: 1.7rem; margin-inline: auto; height: var(--strap, 9rem);
+  width: 1.7rem; margin-inline: auto; height: var(--strap, 6.5rem);
   background:
     repeating-linear-gradient(180deg, rgba(0,0,0,.14) 0 2px, transparent 2px 9px),
     linear-gradient(90deg, #e69a0f, var(--color-amber) 40%, #e69a0f);
-  -webkit-mask-image: linear-gradient(transparent, #000 40%);
-  mask-image: linear-gradient(transparent, #000 40%);
+  -webkit-mask-image: linear-gradient(transparent, #000 30%);
+  mask-image: linear-gradient(transparent, #000 30%);
+}
+/* desktop: a longer lanyard that fades in just under the navbar */
+@media (min-width: 1024px) {
+  .strap { --strap: 11.5rem; -webkit-mask-image: linear-gradient(transparent, #000 22%); mask-image: linear-gradient(transparent, #000 22%); }
 }
 .clip { width: 2.6rem; height: 1.5rem; margin: -2px auto 0; border-radius: 0.35rem 0.35rem 0.8rem 0.8rem; background: linear-gradient(#d7dcd6, #8f9892); box-shadow: 0 2px 4px rgba(0,0,0,.35); position: relative; z-index: 2; }
 .clip::after { content: ""; position: absolute; left: 50%; bottom: -0.55rem; width: 0.9rem; height: 0.9rem; transform: translateX(-50%); border: 3px solid #aab2ac; border-radius: 9999px; }
@@ -205,3 +209,24 @@ html.booting body { background: var(--color-night); overflow: hidden; }
 @keyframes menuIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
 .menu-item { animation: menuItem .4s cubic-bezier(.2,.8,.2,1) both; animation-delay: var(--d, 0ms); }
 @keyframes menuItem { from { opacity: 0; transform: translateX(-16px); } to { opacity: 1; transform: none; } }
+
+/* ---------- round 3: more motion, same on touch ---------- */
+.btn:active, .focus-card:active, .chip:active { transform: scale(0.97); }
+.tab-pill { position: absolute; top: 0.25rem; bottom: 0.25rem; left: 0.25rem; width: calc(50% - 0.25rem); border-radius: 9999px; background: var(--color-ink); transition: transform 0.4s cubic-bezier(.3,1.3,.5,1); }
+.point-in { animation: pointIn .45s cubic-bezier(.2,.8,.2,1) both; animation-delay: var(--d, 0ms); }
+@keyframes pointIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+.focus-card { position: relative; padding: 1rem; border-radius: 1rem; border: 1px solid color-mix(in oklab, var(--color-ink) 15%, transparent); background: var(--color-card); transition: transform .3s cubic-bezier(.3,1.3,.5,1), border-color .3s, box-shadow .3s; outline: none; }
+.focus-card:hover, .focus-card:focus-visible { transform: translateY(-4px); border-color: var(--color-amber); box-shadow: 0 16px 30px -20px rgba(0,0,0,.45); }
+.focus-icon { transition: transform .45s cubic-bezier(.3,1.5,.5,1); }
+.focus-card:hover .focus-icon, .focus-card:focus-visible .focus-icon, .focus-card:active .focus-icon { transform: rotate(-12deg) scale(1.2); }
+
+.totop { opacity: 0; transform: translateY(16px) scale(.8); pointer-events: none; transition: opacity .3s, transform .35s cubic-bezier(.3,1.4,.5,1), background-color .25s; }
+.totop.on { opacity: 1; transform: none; pointer-events: auto; }
+.totop:hover { background: var(--color-amber); color: var(--color-night); }
+.totop:active { transform: scale(.92); }
+
+/* experience row: same highlight on tap as on hover */
+@media (hover: none) {
+  li.group:active h3 { transform: translateX(0.5rem); }
+}

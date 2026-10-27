@@ -25,8 +25,9 @@ export default function Badge() {
         if (!st.drag) {
           // tilting the phone moves the resting point, like a real badge on a lanyard
           st.v += (-16 * Math.sin(st.a - st.tilt) - 1.15 * st.v) * dt;
-          // keep it faintly alive once it settles
-          if (!reduce && Math.abs(st.a) < 0.03 && Math.abs(st.v) < 0.06) st.v += Math.sin(t * 1.4) * 0.5 * dt;
+          // a light breeze keeps it swaying instead of hanging dead still
+          if (!reduce) st.v += (Math.sin(t * 0.9) * 1.1 + Math.sin(t * 2.3) * 0.35) * dt;
+          st.v = Math.max(-4, Math.min(4, st.v));
           st.a += st.v * dt;
         }
         const tilt = Math.max(-16, Math.min(16, st.v * 7));
@@ -46,12 +47,31 @@ export default function Badge() {
       const ax = e.acceleration?.x;
       if (ax != null && Math.abs(ax) > 4) st.v += Math.max(-3, Math.min(3, -ax * 0.12));
     };
+    // scrolling the page (finger or wheel) jolts the lanyard
+    let lastY = window.scrollY;
+    const onScroll = () => {
+      const dy = window.scrollY - lastY;
+      lastY = window.scrollY;
+      if (!st.drag && st.visible) st.v += Math.max(-0.3, Math.min(0.3, dy * 0.004));
+    };
+    // moving the mouse near the badge pushes it like a draught of air
+    const onWind = (e) => {
+      if (e.pointerType !== "mouse" || st.drag || !st.visible) return;
+      const r = stage.current.getBoundingClientRect();
+      const d = Math.hypot(e.clientX - (r.left + r.width / 2), e.clientY - (r.top + r.height * 0.65));
+      const k = Math.max(0, 1 - d / 650);
+      st.v += Math.max(-30, Math.min(30, e.movementX)) * 0.007 * k;
+    };
     window.addEventListener("deviceorientation", onOrient);
     window.addEventListener("devicemotion", onMotion);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("pointermove", onWind, { passive: true });
     return () => {
       cancelAnimationFrame(raf); io.disconnect();
       window.removeEventListener("deviceorientation", onOrient);
       window.removeEventListener("devicemotion", onMotion);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("pointermove", onWind);
     };
   }, []);
 
@@ -82,7 +102,7 @@ export default function Badge() {
       st.lastA = a; st.lastT = now; st.a = a;
       st.moved += Math.abs(e.movementX) + Math.abs(e.movementY);
     } else if (e.pointerType === "mouse" || e.pointerType === "pen") {
-      st.v += Math.max(-40, Math.min(40, e.movementX)) * 0.018;
+      st.v += Math.max(-40, Math.min(40, e.movementX)) * 0.012;
     }
   };
 
@@ -110,7 +130,7 @@ export default function Badge() {
 
   return (
     <div className="flex flex-col items-center">
-      <div ref={stage} className="badge-stage" style={{ "--strap": "clamp(5rem, 14vh, 9rem)" }}>
+      <div ref={stage} className="badge-stage">
         <div ref={swing} className="badge-swing flex flex-col items-center">
           <div className="strap" aria-hidden="true" />
           <div className="clip" aria-hidden="true" />

@@ -1,6 +1,7 @@
 import Navbar from "./components/Navbar";
 import Splash from "./components/Splash";
 import Footer from "./components/Footer";
+import BackToTop from "./components/BackToTop";
 import TechMarquee from "./components/TechMarquee";
 import Hero from "./sections/Hero";
 import About from "./sections/About";
@@ -29,6 +30,7 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
+      <BackToTop />
     </>
   );
 }
