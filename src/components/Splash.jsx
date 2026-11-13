@@ -5,7 +5,7 @@ const DURATION = 2400;
 const log = [
   { at: 8, text: "menyiapkan database", end: "ok" },
   { at: 28, text: "GET /api/projects", end: "200" },
-  { at: 48, text: "ping lenteracpns.id", end: "live" },
+  { at: 48, text: "ping lenteraacademy.com", end: "live" },
   { at: 66, text: "ping pelangiaccessories.store", end: "live" },
   { at: 86, text: "merender antarmuka", end: "ok" },
 ];

@@ -230,3 +230,13 @@ html.booting body { background: var(--color-night); overflow: hidden; }
 @media (hover: none) {
   li.group:active h3 { transform: translateX(0.5rem); }
 }
+
+/* live site preview that scrolls itself (Lentera card): background-position 0% -> 100% pans the full page */
+.peek-img { background-size: 100% auto; background-repeat: no-repeat; background-position: 50% 0%; }
+.peek.run .peek-img { animation: peek 28s cubic-bezier(.45,0,.55,1) 1s infinite alternate; }
+@keyframes peek { 0%, 5% { background-position: 50% 0%; } 95%, 100% { background-position: 50% 100%; } }
+@media (hover: hover) {
+  .peek.run .peek-img { animation-play-state: paused; }
+  .frame-link:hover .peek.run .peek-img, .frame-link:focus-visible .peek.run .peek-img { animation-play-state: running; }
+}
+@media (prefers-reduced-motion: reduce) { .peek.run .peek-img { animation: none; } }

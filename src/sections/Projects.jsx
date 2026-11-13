@@ -46,13 +46,23 @@ function LenteraPoster() {
         <p className="mt-3 text-[#1d4d2f]/80 text-base sm:text-lg">Lolos SKD CPNS, langkah demi langkah.</p>
       </div>
       <dl className="grid grid-cols-3 gap-3 border-t border-[#1d4d2f]/25 pt-4">
-        {[["110", "soal tryout"], ["90", "menit"], ["30", "soal latihan per tema"]].map(([n, l]) => (
+        {[["110", "soal tryout"], ["24", "tema materi"], ["90", "menit"]].map(([n, l]) => (
           <div key={l}>
             <dt className="display text-2xl sm:text-3xl text-[#1d4d2f]">{n}</dt>
             <dd className="text-[11px] sm:text-xs text-[#1d4d2f]/75 leading-tight">{l}</dd>
           </div>
         ))}
       </dl>
+    </div>
+  );
+}
+
+// A full-page capture that pans down like someone scrolling the live site.
+function SitePeek({ src, host }) {
+  const [ref, seen] = useInView(0.25);
+  return (
+    <div ref={ref} className={`peek absolute inset-0 overflow-hidden bg-white ${seen ? "run" : ""}`}>
+      <div className="peek-img absolute inset-0" style={{ backgroundImage: `url(${src})` }} role="img" aria-label={`Tampilan halaman ${host}`} />
     </div>
   );
 }
@@ -111,7 +121,7 @@ function LiveProject({ project, index }) {
     <Reveal as="article" className="grid lg:grid-cols-12 gap-8 lg:gap-14 items-center rounded-3xl border border-cream/15 bg-forest-2 p-5 sm:p-8 lg:p-10 shadow-[0_-20px_60px_-30px_rgba(0,0,0,0.7)]">
       <div className={`lg:col-span-7 ${index % 2 ? "lg:order-2" : ""}`}>
         <BrowserFrame host={project.host} href={project.liveDemo}>
-          {project.preview ? <PelangiPreview url={project.liveDemo} /> : <LenteraPoster />}
+          {project.preview ? <PelangiPreview url={project.liveDemo} /> : project.screenshot ? <SitePeek src={project.screenshot} host={project.host} /> : <LenteraPoster />}
         </BrowserFrame>
       </div>
 

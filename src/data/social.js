@@ -6,6 +6,6 @@ export const social = {
 };
 
 export const liveSites = [
-  { name: "Lentera", url: "https://lenteracpns.id", host: "lenteracpns.id", tagline: "Platform belajar SKD CPNS" },
+  { name: "Lentera", url: "https://lenteraacademy.com", host: "lenteraacademy.com", tagline: "Platform belajar SKD CPNS" },
   { name: "Pelangi Accessories", url: "https://pelangiaccessories.store", host: "pelangiaccessories.store", tagline: "Toko aksesoris online" },
 ];
