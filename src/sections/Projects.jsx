@@ -46,7 +46,7 @@ function LenteraPoster() {
         <p className="mt-3 text-[#1d4d2f]/80 text-base sm:text-lg">Lolos SKD CPNS, langkah demi langkah.</p>
       </div>
       <dl className="grid grid-cols-3 gap-3 border-t border-[#1d4d2f]/25 pt-4">
-        {[["110", "soal tryout"], ["24", "tema materi"], ["90", "menit"]].map(([n, l]) => (
+        {[["110", "soal tryout"], ["24", "tema materi"], ["100", "menit"]].map(([n, l]) => (
           <div key={l}>
             <dt className="display text-2xl sm:text-3xl text-[#1d4d2f]">{n}</dt>
             <dd className="text-[11px] sm:text-xs text-[#1d4d2f]/75 leading-tight">{l}</dd>
